@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.1" client="site" method="upgrade">
+    <name>dspace-mod</name>
+    <author>SEDICI</author>
+    <version>1.0.0</version>
+    <description>This plugin connects the repository SEDICI in joomla, withe the purpose of showing the publications of authors or institutions.</description>
+    <files>
+        <filename>mod_dspace.xml</filename>
+        <filename module="mod_dspace">mod_dspace.php</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+    </files>
+    <config>
+        <fields name="params">
+			<fieldset name="basic">
+				<field name="author" type="text" description="Apellido, Nombre;Apellido2, Nombre2" label="Autor" />
+                                <field name="handle" type="text" description="Ejemplo: 10915/25293" label="Handle" />
+                                <field name="keywords" type="text" description="Palabra1; Palabra2;" label="Palabras Claves" />
+                                <field name="cache" type="list" default="1" label="Días de Cache">
+                                    <option value="0">3</option>
+                                    <option value="1">7</option>
+                                    <option value="2">14</option>
+                                </field>
+                                <field name="all" type="checkbox" label="Todos los resultados" value="1" default="1" />
+                        </fieldset>
+        </fields>
+    </config>
+</extension>
