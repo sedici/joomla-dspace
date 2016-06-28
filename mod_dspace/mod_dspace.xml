@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.1" client="site" method="upgrade">
     <name>dspace-mod</name>
-    <author>SEDICI</author>
+    <author>SEDICI - Paula Salamone Lacunza</author>
+    <authorEmail>info@sedici.unlp.edu.ar</authorEmail>
+    <authorUrl>www.sedici.unlp.edu.ar</authorUrl>
     <version>1.0.0</version>
-    <description>This plugin connects the repository SEDICI in joomla, withe the purpose of showing the publications of authors or institutions.</description>
+    <description>This plugin connects the repository SEDICI in joomla, with the purpose of showing the publications of authors or institutions.</description>
     <files>
         <filename>mod_dspace.xml</filename>
         <filename module="mod_dspace">mod_dspace.php</filename>
         <filename>helper.php</filename>
-        <filename>tmpl/default.php</filename>
+        <folder>tmpl</folder>
+        <folder>model</folder>
+        <folder>util</folder>
     </files>
+    <media folder="media" destination="mod_dspace">
+		<folder>css</folder>
+    </media>
+    <languages>
+	<language tag="en-GB">mod_dspace.ini</language>
+	<language tag="en-GB">mod_dspace.sys.ini</language>
+    </languages>
     <config>
         <fields name="params">
 			<fieldset name="basic">
@@ -21,7 +32,82 @@
                                     <option value="1">7</option>
                                     <option value="2">14</option>
                                 </field>
-                                <field name="all" type="checkbox" label="Todos los resultados" value="1" default="1" />
+                                <field name="share" type="radio" default="0" label="Compartir en redes sociales" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="show_author" type="radio" default="0" label="Mostrar autores" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="show_date" type="radio" default="0" label="Mostrar fecha" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="show_subtype" type="radio" default="0" label="Mostrar tipo de documento" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="description" type="radio" default="0" label="Mostrar Resumen" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="limit" type="number" default="0" label="Limitar la longitud del texto" min="0" max="500" step="1" />
+                                <field name="max_results" type="number" label="Cantidad de resultados" min="1" max="100" step="1" />
+                                <field name="group_year" type="radio" default="0" label="Agrupar por fecha" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="group_subtype" type="radio" default="0" label="Agrupar por subtipos" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="text1" type="note" label="Seleccionar solo si se desea especificar los resultados por subtipos de documentos" />
+                                
+                                <field name="article" type="radio" default="0" label="Articulo" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="book" type="radio" default="0" label="Libro" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="working_paper" type="radio" default="0" label="Documento de trabajo" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="technical_report" type="radio" default="0" label="Informe tecnico" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="conference_object" type="radio" default="0" label="Objeto de conferencia" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="revision" type="radio" default="0" label="Revision" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="work_specialization" type="radio" default="0" label="Trabajo de especializacion" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="preprint" type="radio" default="0" label="Preprint" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="master_thesis" type="radio" default="0" label="Tesis de maestria" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="phD_thesis" type="radio" default="0" label="Tesis de doctorado" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="licentiate_thesis" type="radio" default="0" label="Tesis de grado" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
                         </fieldset>
         </fields>
     </config>

@@ -19,7 +19,7 @@ class View {
 	}
 	
 	public function author($authors){ ?>
-            <div id="sedici-title"><?php _e('Autores:'); ?>
+            <div id="sedici-title"><?php echo('Autores:'); ?>
             <?php
                 $names = array ();
 		foreach ( $authors as $author ) {
@@ -36,7 +36,7 @@ class View {
 	}
         
 	public function show_text($text,$maxlenght){
-            if (!is_null($maxlenght)){
+            if (!is_null($maxlenght) && ($maxlenght!=0)){
 		echo ($this->html_especial_chars(substr($text, 0, $maxlenght).'...'));
             }
             else {
@@ -54,7 +54,7 @@ class View {
                         $title = 'Sumario:';
                         $show_text = $item->get_description ();
                 } ?>
-                <div id="sedici-title"><?php _e($title); ?>
+                <div id="sedici-title"><?php echo($title); ?>
                 <span class="sedici-content">
                 <?php 
                     $this->show_text($show_text,$maxlenght);
@@ -86,16 +86,16 @@ class View {
         <div class="a_unline">
             Compartir: 
              <a href="https://www.facebook.com/sharer/sharer.php?p[title]=<?php echo $title;?>&p[url]=<?php echo $link;?>" target="_blank">
-                 <?php echo '<img src="' . plugins_url( 'img/share-facebook.png', dirname(__FILE__) ) . '" alt="Facebook logo" title="Compartir en Facebook">';?>
+                 <?php echo '<img src="' . dirname(dirname(__FILE__)).'/media/img/share-facebook.png'. '" alt="Facebook logo" title="Compartir en Facebook">';?>
              </a>
              <a href="https://twitter.com/?status=<?php echo $title," ",$link," via @sedici_unlp";?>" target="_blank">
-                  <?php echo '<img src="' . plugins_url( 'img/share-twitter.png', dirname(__FILE__) ) . '" alt="Twitter logo" title="Compartir en Twitter">';?>
+                  <?php echo '<img src="' . dirname(dirname(__FILE__)).'/media/img/share-twitter.png'. '" alt="Twitter logo" title="Compartir en Twitter">';?>
              </a>
              <a href="https://plus.google.com/share?url=<?php echo $link;?>" target="_blank">
-                  <?php echo '<img src="' . plugins_url( 'img/share-plus.png', dirname(__FILE__) ) . '" alt="Google+ logo" title="Compartir en Google+">';?>
+                  <?php echo '<img src="' . dirname(dirname(__FILE__)).'/media/img/share-plus.png'. '" alt="Google+ logo" title="Compartir en Google+">';?>
              </a>
              <a href="http://www.linkedin.com/shareArticle?url=<?php echo $link;?>" target="_blank">
-                  <?php echo '<img src="' . plugins_url( 'img/share-linkedin.png', dirname(__FILE__) ) . '" alt="Linkedin logo" title="Compartir en Linkedin">';?>
+                  <?php echo '<img src="'. dirname(dirname(__FILE__)).'/media/img/share-linkedin.png'. '" alt="Linkedin logo" title="Compartir en Linkedin">';?>
              </a>
         </div>    
         <?php    
@@ -115,14 +115,14 @@ class View {
 				if ($attributes['date']) 
                                 { ?>
                                     <published>
-                                        <div id="sedici-title"><?php _e('Fecha:'); ?> 
+                                        <div id="sedici-title"><?php echo('Fecha:'); ?> 
                                         <span class="sedici-content"><?php  echo $item->get_date ( 'Y-m-d' ); ?></span></div>
                                     </published>
 				<?php } //end if fecha  
                                 if ($attributes['show_subtypes']) 
                                 { ?>
                                     <dc:type>
-                                        <div id="sedici-title"><?php _e('Tipo de documento:'); ?> 
+                                        <div id="sedici-title"><?php echo('Tipo de documento:'); ?> 
                                             <span class="sedici-content"><?php  echo $this->dctype($item); ?></span></div>
                                     </dc:type>
 				<?php } //end if fecha
@@ -177,5 +177,16 @@ class View {
 			}
             return ;
 	}
-        
+        public function render ($results,$attributes,$group_subtype,$group_date){
+                if ($group_date && $group_subtype) {
+                    return ($this->publicationsByDateSubtype ( $results, $attributes));
+                }
+                if ($group_date){
+                     return ($this->publicationsByGroup( $results, $attributes,"date"));
+                }
+                if ($group_subtype){
+                     return ($this->publicationsByGroup( $results, $attributes,"subtype"));
+                }
+                return $this->allPublications($results, $attributes);
+	}
 } // end class

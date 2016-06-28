@@ -5,9 +5,8 @@ defined('_JEXEC') or die; ?>
 require_once dirname(__FILE__) . '/View.php';
 
 $document = JFactory::getDocument();
-$document->addStyleSheet(dirname(__FILE__) . '/css/styles.css');
+$document->addStyleSheet(JPATH_ROOT . '/media/mod_dspace/css/styles.css');
 
 $view = new View();
-$view->allPublications($results, $attributes);
-
+$view->render($results, $attributes, $group_subtype, $group_year);
 ?>
