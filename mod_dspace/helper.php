@@ -113,7 +113,7 @@ class ModDspacedHelper
         return $params->get('group_year');
     }
     
-    public static function selectedSubtypes ($params) {
+    public static function selectedSubtypes ($params,&$groups) {
         //this function returns all active subtypes
         $all=true;
         $groups = array ();
@@ -127,9 +127,6 @@ class ModDspacedHelper
                     $all=false;
                 }
 	}
-        if(!$all){          
-            return $groups;
-        }
-        else { return false; }   
+        return $all;
     }
 }

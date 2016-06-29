@@ -32,9 +32,7 @@ if($util->validete($author,$handle,$keywords)){
     $show_subtypes = ModDspacedHelper::getShowSubtype($params);
     $group_year = ModDspacedHelper::getGroupYear($params);
     $group_subtype = ModDspacedHelper::getGroupSubtype($params);
-    $subtypes = ModDspacedHelper::selectedSubtypes($params);
-    if (!$subtypes){ $all = true; } else { $all=false;}
-    
+    $all = ModDspacedHelper::selectedSubtypes($params,$subtypes);
     $attributes = $util->group_attributes ( $description, $date, $show_author, $maxlenght, $show_subtypes,$share);
     $queryStandar = $util->standarQuery($handle, $author, $keywords,$max_results);
     $results= $util->getPublications($all, $queryStandar, $cache, $subtypes ,$group_subtype,$group_year);       
