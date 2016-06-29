@@ -86,16 +86,16 @@ class View {
         <div class="a_unline">
             Compartir: 
              <a href="https://www.facebook.com/sharer/sharer.php?p[title]=<?php echo $title;?>&p[url]=<?php echo $link;?>" target="_blank">
-                 <?php echo '<img src="' . dirname(dirname(__FILE__)).'/media/img/share-facebook.png'. '" alt="Facebook logo" title="Compartir en Facebook">';?>
+                 <?php echo '<img src="' . JUri::base().'media/mod_dspace/img/share-facebook.png'. '" alt="Facebook logo" title="Compartir en Facebook">';?>
              </a>
              <a href="https://twitter.com/?status=<?php echo $title," ",$link," via @sedici_unlp";?>" target="_blank">
-                  <?php echo '<img src="' . dirname(dirname(__FILE__)).'/media/img/share-twitter.png'. '" alt="Twitter logo" title="Compartir en Twitter">';?>
+                  <?php echo '<img src="' . JUri::base().'media/mod_dspace/img/share-twitter.png'. '" alt="Twitter logo" title="Compartir en Twitter">';?>
              </a>
              <a href="https://plus.google.com/share?url=<?php echo $link;?>" target="_blank">
-                  <?php echo '<img src="' . dirname(dirname(__FILE__)).'/media/img/share-plus.png'. '" alt="Google+ logo" title="Compartir en Google+">';?>
+                  <?php echo '<img src="' . JUri::base().'media/mod_dspace/img/share-plus.png'. '" alt="Google+ logo" title="Compartir en Google+">';?>
              </a>
              <a href="http://www.linkedin.com/shareArticle?url=<?php echo $link;?>" target="_blank">
-                  <?php echo '<img src="'. dirname(dirname(__FILE__)).'/media/img/share-linkedin.png'. '" alt="Linkedin logo" title="Compartir en Linkedin">';?>
+                  <?php echo '<img src="'. JUri::base().'media/mod_dspace/img/share-linkedin.png'. '" alt="Linkedin logo" title="Compartir en Linkedin">';?>
              </a>
         </div>    
         <?php    

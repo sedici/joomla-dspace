@@ -16,11 +16,8 @@
     </files>
     <media folder="media" destination="mod_dspace">
 		<folder>css</folder>
+		<folder>img</folder>
     </media>
-    <languages>
-	<language tag="en-GB">mod_dspace.ini</language>
-	<language tag="en-GB">mod_dspace.sys.ini</language>
-    </languages>
     <config>
         <fields name="params">
 			<fieldset name="basic">
