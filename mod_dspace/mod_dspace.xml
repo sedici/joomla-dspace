@@ -5,7 +5,7 @@
     <authorEmail>info@sedici.unlp.edu.ar</authorEmail>
     <authorUrl>www.sedici.unlp.edu.ar</authorUrl>
     <version>1.0.0</version>
-    <description>This plugin connects the repository SEDICI in joomla, with the purpose of showing the publications of authors or institutions.</description>
+    <description>MOD_DSPACE_XML_DESCRIPTION</description>
     <files>
         <filename>mod_dspace.xml</filename>
         <filename module="mod_dspace">mod_dspace.php</filename>
@@ -14,6 +14,12 @@
         <folder>model</folder>
         <folder>util</folder>
     </files>
+    <languages>
+		<language tag="en-GB">en-GB.mod_dspace.ini</language>
+		<language tag="en-GB">en-GB.mod_dspace.sys.ini</language>
+                <language tag="es-ES">es-ES.mod_dspace.ini</language>
+		<language tag="es-ES">es-ES.mod_dspace.sys.ini</language>
+	</languages>
     <media folder="media" destination="mod_dspace">
 		<folder>css</folder>
 		<folder>img</folder>
@@ -21,87 +27,91 @@
     <config>
         <fields name="params">
 			<fieldset name="basic">
-				<field name="author" type="text" description="Apellido, Nombre;Apellido2, Nombre2" label="Autor" />
-                                <field name="handle" type="text" description="Ejemplo: 10915/25293" label="Handle" />
-                                <field name="keywords" type="text" description="Palabra1; Palabra2;" label="Palabras Claves" />
-                                <field name="cache" type="list" default="1" label="Días de Cache">
+				<field name="author" type="text" description="MOD_DSPACE_XML_DESCRIPTION_AUTHOR" label="MOD_DSPACE_XML_LABEL_AUTHOR" />
+                                <field name="handle" type="text" description="MOD_DSPACE_XML_DESCRIPTION_HANDLE" label="MOD_DSPACE_XML_LABEL_HANDLE" />
+                                <field name="keywords" type="text" description="MOD_DSPACE_XML_DESCRIPTION_KEY_WORDS" label="MOD_DSPACE_XML_LABEL_KEY_WORDS" />
+                                <field name="cache" type="list" default="1" label="MOD_DSPACE_XML_LABEL_CACHE">
                                     <option value="0">3</option>
                                     <option value="1">7</option>
                                     <option value="2">14</option>
                                 </field>
-                                <field name="share" type="radio" default="0" label="Compartir en redes sociales" class="btn-group btn-group-yesno">
+                                <field name="share" type="radio" default="0" label="MOD_DSPACE_XML_LABEL_SHARE" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="show_author" type="radio" default="0" label="Mostrar autores" class="btn-group btn-group-yesno">
+                                <field name="show_author" type="radio" default="0" label="MOD_DSPACE_XML_LABEL_SHOW_AUTHOR" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="show_date" type="radio" default="0" label="Mostrar fecha" class="btn-group btn-group-yesno">
+                                <field name="show_date" type="radio" default="0" label="MOD_DSPACE_XML_LABEL_SHOW_DATE" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="show_subtype" type="radio" default="0" label="Mostrar tipo de documento" class="btn-group btn-group-yesno">
+                                <field name="show_subtype" type="radio" default="0" label="MOD_DSPACE_XML_LABEL_SHOW_SUBTYPE" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="description" type="radio" default="0" label="Mostrar Resumen" class="btn-group btn-group-yesno">
+                                <field name="description" type="radio" default="0" label="MOD_DSPACE_XML_LABEL_SHOW_DESCRIPTION" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="limit" type="number" default="0" label="Limitar la longitud del texto" min="0" max="500" step="1" />
-                                <field name="max_results" type="number" label="Cantidad de resultados" min="1" max="100" step="1" />
-                                <field name="group_year" type="radio" default="0" label="Agrupar por fecha" class="btn-group btn-group-yesno">
-                                    <option value="1">JYes</option>
-                                    <option value="0">JNo</option>
-                                </field>
-                                <field name="group_subtype" type="radio" default="0" label="Agrupar por subtipos" class="btn-group btn-group-yesno">
-                                    <option value="1">JYes</option>
-                                    <option value="0">JNo</option>
-                                </field>
-                                <field name="text1" type="note" label="Seleccionar solo si se desea especificar los resultados por subtipos de documentos" />
                                 
-                                <field name="article" type="radio" default="0" label="Articulo" class="btn-group btn-group-yesno">
+                                <field name="limit" type="number" default="0" label="MOD_DSPACE_XML_LABEL_LIMIT" min="0" max="500" step="1" />
+                                
+                                <field name="max_results" type="number" label="MOD_DSPACE_XML_LABEL_MAX_RESULTS" min="1" max="100" step="1" />
+                                
+                                <field name="group_year" type="radio" default="0" label="MOD_DSPACE_XML_LABEL_GROUP_BY_YEAR" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="book" type="radio" default="0" label="Libro" class="btn-group btn-group-yesno">
+                                <field name="group_subtype" type="radio" default="0" label="MOD_DSPACE_XML_LABEL_GROUP_BY_SUBTYPE" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="working_paper" type="radio" default="0" label="Documento de trabajo" class="btn-group btn-group-yesno">
+                                
+                                <field name="text1" type="note" label="MOD_DSPACE_XML_LABEL_SELECTED_SUBTYPES" />
+                                
+                                <field name="article" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_ARTICLE" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="technical_report" type="radio" default="0" label="Informe tecnico" class="btn-group btn-group-yesno">
+                                <field name="book" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_BOOK" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="conference_object" type="radio" default="0" label="Objeto de conferencia" class="btn-group btn-group-yesno">
+                                <field name="working_paper" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_WORKING_PAPER" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="revision" type="radio" default="0" label="Revision" class="btn-group btn-group-yesno">
+                                <field name="technical_report" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_TECHNICAL_REPORT" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="work_specialization" type="radio" default="0" label="Trabajo de especializacion" class="btn-group btn-group-yesno">
+                                <field name="conference_object" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_CONFERENCE_OBJECT" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="preprint" type="radio" default="0" label="Preprint" class="btn-group btn-group-yesno">
+                                <field name="revision" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_REVISION" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="master_thesis" type="radio" default="0" label="Tesis de maestria" class="btn-group btn-group-yesno">
+                                <field name="work_specialization" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_WORK_SPECIALIZATION" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="phD_thesis" type="radio" default="0" label="Tesis de doctorado" class="btn-group btn-group-yesno">
+                                <field name="preprint" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_PREPRINT" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>
-                                <field name="licentiate_thesis" type="radio" default="0" label="Tesis de grado" class="btn-group btn-group-yesno">
+                                <field name="master_thesis" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_MASTER_THESIS" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="phD_thesis" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_PHD_THESIS" class="btn-group btn-group-yesno">
+                                    <option value="1">JYes</option>
+                                    <option value="0">JNo</option>
+                                </field>
+                                <field name="licentiate_thesis" type="radio" default="0" label="MOD_DSPACE_XML_SUBTYPE_LABEL_LICENCIATE_THESIS" class="btn-group btn-group-yesno">
                                     <option value="1">JYes</option>
                                     <option value="0">JNo</option>
                                 </field>

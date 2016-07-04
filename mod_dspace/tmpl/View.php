@@ -19,7 +19,7 @@ class View {
 	}
 	
 	public function author($authors){ ?>
-            <div id="sedici-title"><?php echo('Autores:'); ?>
+            <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_AUTHOR'); ?>
             <?php
                 $names = array ();
 		foreach ( $authors as $author ) {
@@ -47,14 +47,17 @@ class View {
 	
 	public function show_description ($description,$item,$maxlenght){
 		if ($description == "description") {
-                        $title = "Resumen:";
                         $show_text = $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
                         $show_text = $show_text[0]['data'];
+                ?>        
+                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DESCRIPTION'); ?>
+                <?php            
                 } else {
-                        $title = 'Sumario:';
                         $show_text = $item->get_description ();
+                ?>        
+                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_SUMMARY'); ?>
+                <?php            
                 } ?>
-                <div id="sedici-title"><?php echo($title); ?>
                 <span class="sedici-content">
                 <?php 
                     $this->show_text($show_text,$maxlenght);
@@ -84,7 +87,7 @@ class View {
         function share($link,$title){
         ?>
         <div class="a_unline">
-            Compartir: 
+            <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_SHARE'); ?>
              <a href="https://www.facebook.com/sharer/sharer.php?p[title]=<?php echo $title;?>&p[url]=<?php echo $link;?>" target="_blank">
                  <?php echo '<img src="' . JUri::base().'media/mod_dspace/img/share-facebook.png'. '" alt="Facebook logo" title="Compartir en Facebook">';?>
              </a>
@@ -97,6 +100,7 @@ class View {
              <a href="http://www.linkedin.com/shareArticle?url=<?php echo $link;?>" target="_blank">
                   <?php echo '<img src="'. JUri::base().'media/mod_dspace/img/share-linkedin.png'. '" alt="Linkedin logo" title="Compartir en Linkedin">';?>
              </a>
+            </div>    
         </div>    
         <?php    
         }
@@ -105,7 +109,7 @@ class View {
 		?>
 		<article>
 			<title><?php echo $item->get_title ();?></title>
-                        <div id="sedici-title"><?php echo('T&iacute;tulo:'); ?>
+                        <div id="sedici-title">
                         <a href="<?php echo $link; ?>" target="_blank">
                             <?php echo ($this->html_especial_chars($item->get_title ())); ?> 
                         </a>
@@ -115,14 +119,14 @@ class View {
 				if ($attributes['date']) 
                                 { ?>
                                     <published>
-                                        <div id="sedici-title"><?php echo('Fecha:'); ?> 
+                                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DATE'); ?> 
                                         <span class="sedici-content"><?php  echo $item->get_date ( 'Y-m-d' ); ?></span></div>
                                     </published>
 				<?php } //end if fecha  
                                 if ($attributes['show_subtypes']) 
                                 { ?>
                                     <dc:type>
-                                        <div id="sedici-title"><?php echo('Tipo de documento:'); ?> 
+                                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DOCUMENT_SUBTYPE'); ?> 
                                             <span class="sedici-content"><?php  echo $this->dctype($item); ?></span></div>
                                     </dc:type>
 				<?php } //end if fecha
