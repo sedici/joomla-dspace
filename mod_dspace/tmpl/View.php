@@ -110,9 +110,9 @@ class View {
 		<article>
 			<title><?php echo $item->get_title ();?></title>
                         <div id="sedici-title">
-                        <a href="<?php echo $link; ?>" target="_blank">
+                            <li><a href="<?php echo $link; ?>" target="_blank">
                             <?php echo ($this->html_especial_chars($item->get_title ())); ?> 
-                        </a>
+                            </a></li>
                         </div>  
 				<?php 
 				if ($attributes['show_author']){ $this->author($item->get_authors ()); }
@@ -140,6 +140,7 @@ class View {
 	
 	public function publicationsByDateSubtype($entrys, $attributes) {
                     $date="";$subtype="";
+                    ?><ul><?php
 			foreach ($entrys as $item){
                             $date2=$date;
                             $date=$item->get_date ( 'Y' );
@@ -151,6 +152,7 @@ class View {
                             if($subtype != $subtype2) { echo "<h3>".$subtype."</h3>";}
                             $this->document($item, $attributes);
 			}
+                    ?></ul><?php    
             return ;
 	}
         public function group($item,$group){
@@ -163,6 +165,7 @@ class View {
         
         public function publicationsByGroup($entrys, $attributes, $group) {
                     $order="";
+                    ?><ul><?php
 			foreach ($entrys as $item){
                             $value=$order;
                             $order= $this->group($item, $group);
@@ -171,14 +174,17 @@ class View {
                              }
                             $this->document($item, $attributes);
 			}
+                    ?></ul><?php    
             return ;
 	}
         
         
         public function allPublications($entrys, $attributes) {
+                ?><ul><?php
 			foreach ($entrys as $item){
                             $this->document($item, $attributes);
 			}
+                ?></ul><?php
             return ;
 	}
         public function render ($results,$attributes,$group_subtype,$group_date){
