@@ -17,7 +17,7 @@
     <languages>
 		<language tag="en-GB">en-GB.mod_dspace.ini</language>
 		<language tag="en-GB">en-GB.mod_dspace.sys.ini</language>
-                <language tag="es-ES">es-ES.mod_dspace.ini</language>
+        <language tag="es-ES">es-ES.mod_dspace.ini</language>
 		<language tag="es-ES">es-ES.mod_dspace.sys.ini</language>
 	</languages>
     <media folder="media" destination="mod_dspace">
