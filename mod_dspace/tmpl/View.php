@@ -248,7 +248,7 @@ class View {
 			foreach ($entrys as $item){
                             $this->document($item, $attributes);
 			}
-            ?></ul></div><?php            
+            ?></ul></div><?php
             return ;
 	}
         public function render ($results,$attributes, $cmp, $configuration){

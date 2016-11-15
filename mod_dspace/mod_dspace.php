@@ -12,17 +12,15 @@ defined('_JEXEC') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__) . '/helper.php';
 require_once dirname(__FILE__) .'/configuration/config.php';
-require_once dirname(__FILE__) .'/util/WidgetFilter.php';
 require_once dirname(__FILE__) .'/util/WidgetValidation.php';
 require_once dirname(__FILE__) .'/util/Query.php';
 require_once dirname(__FILE__) .'/util/XmlOrder.php';
 require_once dirname(__FILE__) .'/model/SimplepieModel.php';
 require_once dirname(__FILE__) .'/configuration/Configuration.php';
-foreach ( glob ( dirname(__FILE__) ."/configuration/*_config.php" ) as $app ) { 
-    require_once $app;
+$directorio = dirname(dirname(__FILE__)) .'/configuration/';
+foreach (glob($directorio."*_config.php") as $value) {
+    require_once $value;
 }
-
-
 $util= new Query();
 $validation = new WidgetValidation();
 $handle = ModDspacedHelper::getHandle($params);
@@ -48,9 +46,9 @@ if($validation->labelValidation($author,$handle,$keywords)){
     $all = ModDspacedHelper::selectedSubtypes($params,$subtypes_selected);
     $all = $configuration->instance_all($all);
     $attributes = $util->group_attributes ( $description, $date, $show_author, $maxlenght, $show_subtypes,$share);
-    $queryStandar = $util->standarQuery($handle, $author, $keywords,$max_results, $configuration);  
+    $queryStandar = $util->standarQuery($handle, $author, $keywords,$max_results, $configuration);
     $cmp=$validation->getOrder($group_subtype,$group_year);
     $util->setCmp($cmp);
-    $results= $util->getPublications($all, $queryStandar, $cache, $subtypes_selected );   
+    $results= $util->getPublications($all, $queryStandar, $cache, $subtypes_selected );
 }
 require JModuleHelper::getLayoutPath('mod_dspace');

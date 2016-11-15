@@ -8,4 +8,3 @@ $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::base() . '/media/mod_dspace/css/styles.css');
 $view = new View();
 $view->render ($results,$attributes, $cmp, $configuration);
-?>

@@ -3,9 +3,10 @@ define ( 'CMP_DATE_SUBTYPE', "cmpDateSubtype" );
 define ( 'CMP_DATE', "cmpDate" );
 define ( 'CMP_SUBTYPE', "cmpSubtype");
 require_once dirname(dirname(__FILE__)) .'/configuration/Configuration.php';
-foreach ( glob ( dirname(dirname(__FILE__)) ."/configuration/*_config.php" ) as $app ) { 
-    require_once $app;
-}       
+$directorio = dirname(dirname(__FILE__)) .'/configuration/';
+foreach (glob($directorio."*_config.php") as $value) {
+    require_once $value;
+}
 class FormValidation {
     protected $order;
     
