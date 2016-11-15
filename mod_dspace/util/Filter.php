@@ -5,6 +5,7 @@ class Filter {
 	public function Filter(){
 		$this->subtypes =  array(
                 'article' => 'Articulo',
+                'conference_document' => 'Documento de conferencia',    
                 'book' => 'Libro',
                 'working_paper' =>  "Documento de trabajo",
                 'technical_report' => "Informe tecnico",
@@ -19,7 +20,9 @@ class Filter {
                  );
 	}
 	public function subtypes() {
-		return array_merge($this->vectorSubtypes(),$this->vectorTesis());
+                $all_subtypes = array_merge($this->vectorSubtypes(),$this->vectorTesis());
+                asort($all_subtypes);
+                return $all_subtypes;
 	}
 	public function vectorTesis() {
 		return $this->thesis;

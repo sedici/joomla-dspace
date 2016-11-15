@@ -32,6 +32,9 @@ class SimplepieModel {
 		return ($filter[0]);
 	}
         public function date($entry){
+            return $entry->get_date ( 'Y-m-d' );
+        }
+        public function year($entry){
             return $entry->get_date ( 'Y' );
         }
 	public function totalResults($sxe){

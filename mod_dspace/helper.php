@@ -27,6 +27,10 @@ class ModDspacedHelper
     {
         return $params->get('keywords');
     }
+    public static function getConfig($params)
+    {
+        return $params->get('config');
+    }
     public static function getCache($params)
     {
         return $params->get('cache');
@@ -75,6 +79,10 @@ class ModDspacedHelper
     public static function getConferenceObject($params)
     {
         return $params->get('conference_object');
+    }
+      public static function getConferenceDocument($params)
+    {
+        return $params->get('conference_document');
     }
     public static function getRevision($params)
     {

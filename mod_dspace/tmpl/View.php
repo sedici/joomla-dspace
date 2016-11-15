@@ -1,34 +1,34 @@
 <?php
 class View {
-	public function subtype($sub){
-		return ucfirst($sub);
-	}
-
-	public function html_especial_chars($texto){
+        protected $configuration;
+        public function set_configuration($config){
+            $this->configuration = $config;
+        }
+        public function html_especial_chars($texto){
 		return (htmlspecialchars_decode($texto));
 	}
-	public function remplace($text){
-		return str_replace(" ", S_CONECTOR5, $text);
-	}
+	
 	public function link_author( $author){
-		$link = get_protocol_domain().S_FILTER;
-                $name = str_replace(",", S_CONECTOR4, $author);
-                $name = $this->remplace($name);
-                $link .= strtolower($name). S_SEPARATOR . $name;
-		return  ('<a href='.$link.' target="_blank">'.$author.'</a>') ;
+            return $this->configuration->print_author($author);
 	}
 	
-	public function author($authors){ ?>
-            <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_AUTHOR'); ?>
-            <?php
-                $names = array ();
-		foreach ( $authors as $author ) {
+	public function author($authors){ 
+            $names = array ();
+            foreach ( $authors as $author ) {
+            if( isset($author ) && ($author != FALSE)){
+            //    if(!empty($author->get_name ())){
                     array_push ($names, "<author><name>".$this->link_author($author->get_name ())."</name></author>");
-		}//end foreach autores
-            print_r(implode("-", $names));
+                }
+            }//end foreach autores
+            if (!empty($names)){
+            ?>
+            <div id="sedici-title">
+            <?php echo('Autores: ');
+                print_r(implode("-", $names));
             ?>
             </div>
             <?php
+            }
             return;
 	}
 	public function is_description($des){
@@ -36,7 +36,7 @@ class View {
 	}
         
 	public function show_text($text,$maxlenght){
-            if (!is_null($maxlenght) && ($maxlenght!=0)){
+            if (!is_null($maxlenght)){
 		echo ($this->html_especial_chars(substr($text, 0, $maxlenght).'...'));
             }
             else {
@@ -46,23 +46,19 @@ class View {
 	}
 	
 	public function show_description ($description,$item,$maxlenght){
-		if ($description == "description") {
+		if ($description == "description") { ?>
+                      <div id="sedici-title"><?php echo("Resumen:");  
                         $show_text = $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
                         $show_text = $show_text[0]['data'];
-                ?>        
-                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DESCRIPTION'); ?>
-                <?php            
-                } else {
+                } else {  ?>
+                     <div id="sedici-title"><?php echo('Sumario:'); 
                         $show_text = $item->get_description ();
-                ?>        
-                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_SUMMARY'); ?>
-                <?php            
                 } ?>
                 <span class="sedici-content">
                 <?php 
                     $this->show_text($show_text,$maxlenght);
-                    ?></span>
-                </div>
+                    ?>
+                </span></div>
                 <?php
 		return;
 	}
@@ -107,96 +103,165 @@ class View {
 	public function document($item,$attributes){
 		$link = $item->get_link ();	
 		?>
-		<article>
+		<li><article>
 			<title><?php echo $item->get_title ();?></title>
                         <div id="sedici-title">
-                            <li><a href="<?php echo $link; ?>" target="_blank">
+                            <a href="<?php echo $link; ?>" target="_blank">
                             <?php echo ($this->html_especial_chars($item->get_title ())); ?> 
-                            </a></li>
+                            </a>
                         </div>  
 				<?php 
 				if ($attributes['show_author']){ $this->author($item->get_authors ()); }
 				if ($attributes['date']) 
                                 { ?>
                                     <published>
-                                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DATE'); ?> 
+                                        <div id="sedici-title"><?php echo('Fecha:'); ?> 
                                         <span class="sedici-content"><?php  echo $item->get_date ( 'Y-m-d' ); ?></span></div>
                                     </published>
 				<?php } //end if fecha  
                                 if ($attributes['show_subtypes']) 
                                 { ?>
                                     <dc:type>
-                                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DOCUMENT_SUBTYPE'); ?> 
+                                        <div id="sedici-title"><?php echo('Tipo de documento:'); ?> 
                                             <span class="sedici-content"><?php  echo $this->dctype($item); ?></span></div>
                                     </dc:type>
 				<?php } //end if fecha
 				$this->description($attributes['description'], $item,$attributes['max_lenght']);
                                 if ($attributes['share']){ $this->share($link,$item->get_title ()); }
 				?>
-		</article>
+		</article></li>
 		<?php 
 		return;
 	}
 	
-	public function publicationsByDateSubtype($entrys, $attributes) {
-                    $date="";$subtype="";
-                    ?><ul><?php
-			foreach ($entrys as $item){
-                            $date2=$date;
-                            $date=$item->get_date ( 'Y' );
-                            $subtype2=$subtype;
-                            $subtype= $this->dctype($item);
-                            if($date != $date2) { echo "<h2>".$date."</h2>";
-                            $subtype2="";
-                            }
-                            if($subtype != $subtype2) { echo "<h3>".$subtype."</h3>";}
-                            $this->document($item, $attributes);
-			}
-                    ?></ul><?php    
-            return ;
-	}
         public function group($item,$group){
             if ($group == "date") {
                 return $item->get_date ( 'Y' );
             } else if ( $group == "subtype") {
                 return $this->dctype($item);
             }
+            return true;
+        }
+        public function corte($elem,$comparator,$value){
+            if($comparator=="date"){
+                return ($elem->get_date ( 'Y' )==$value);
+            }
+            elseif ($comparator=="subtype") {
+                return ($this->dctype($elem)==$value);
+            }
+            return true;
+        }
+        public function corteControl($anArray,$attributes,$position,$corte,$corte2=""){
+            $c=true; $c2=true; 
+            $condition= $this->group($anArray[$position],$corte);
+            $condition2= $this->group($anArray[$position],$corte2);
+            while ( ($position != count($anArray)) && ( $c ) && ($c2)) {
+                 $c = $this->corte($anArray[$position], $corte, $condition);
+                 $c2 = $this->corte($anArray[$position], $corte2, $condition2);
+                 if (($c) && ($c2)) {
+                    $this->document($anArray[$position], $attributes);
+                    $position++;
+                 }   
+             }
+             return $position;
+        }
+
+        public function publicationsByGroup($entrys, $attributes, $group) {
+                    $position=0;
+                    ?>
+                    <div class="documents" id="<?php echo $group; ?>">
+                    <?php    
+                    while ($position != count($entrys)){
+                        $currentElem= $entrys[$position];
+                        $title = $this->group($currentElem, $group);
+                    ?>
+                        <div id="<?php echo $title; ?>">
+                        <h2><?php echo $title; ?></h2>
+                        <ul>
+                    <?php
+                        $position = $this->corteControl($entrys,$attributes,$position,$group);
+                    ?>
+                        </ul>
+                        </div>
+                    <?php    
+                    }
+                    ?>
+                    </div> <!-- end div=group-->  
+            <?php        
+            return ;
+	}
+        public function printTitle($title,$lastTitle){
+            if (strcmp($title,$lastTitle)!== 0) { ?>
+                <!-- Div open in function printTitle  -->
+                <div id="<?php echo $title; ?>">
+                <h2><?php echo $title; ?></h2>
+            <?php
+            }//end if
+            return ;
         }
         
-        public function publicationsByGroup($entrys, $attributes, $group) {
-                    $order="";
-                    ?><ul><?php
-			foreach ($entrys as $item){
-                            $value=$order;
-                            $order= $this->group($item, $group);
-                             if($value != $order) {
-                                 ?><h2><?php echo $order; ?></h2><?php
-                             }
-                            $this->document($item, $attributes);
-			}
-                    ?></ul><?php    
+        public function closeDiv($actualTitle,$entrys,$position,$group){
+            if ($position < count($entrys)) {
+                $titleEntry = $this->group($entrys[$position], $group); 
+                return (strcmp($actualTitle, $titleEntry)!== 0);
+            }
+            return true;
+        }
+        
+        public function publicationsByDateSubtype($entrys, $attributes,$group,$subgroup) {
+           $position=0; $title="";
+           ?>
+           <div class="documents" id="DateSubtype">
+           <?php    
+           while ($position != count($entrys)){
+                $currentElem= $entrys[$position];
+                $lastTitle = $title;
+                $title = $this->group($currentElem, $group);
+                $subtitle = $this->group($currentElem, $subgroup);
+                $this->printTitle($title, $lastTitle);
+            ?>
+                <div id="<?php echo $title.$subtitle; ?>">
+                <h3><?php echo $subtitle; ?></h3>
+                <ul>
+            <?php
+                $position = $this->corteControl($entrys,$attributes,$position,$group,$subgroup);
+            ?>
+                </ul>
+                </div>    
+            <?php
+                if($this->closeDiv($title, $entrys, $position, $group)){ 
+                    ?>
+                    </div> 
+                    <!-- Close the Div open in function printTitle  -->
+            <?php    
+                }// end if(cerrarDiv)
+            }//end while
+            ?>
+            </div> <!-- close div=DateSubtype -->
+            <?php    
             return ;
 	}
         
         
         public function allPublications($entrys, $attributes) {
-                ?><ul><?php
+            ?><div class="documents" id="allPublications"><ul><?php
 			foreach ($entrys as $item){
                             $this->document($item, $attributes);
 			}
-                ?></ul><?php
+            ?></ul></div><?php            
             return ;
 	}
-        public function render ($results,$attributes,$group_subtype,$group_date){
-                if ($group_date && $group_subtype) {
-                    return ($this->publicationsByDateSubtype ( $results, $attributes));
+        public function render ($results,$attributes, $cmp, $configuration){
+            $this->set_configuration($configuration);
+                if(strcmp($cmp, CMP_DATE_SUBTYPE)==0){
+                    return ($this->publicationsByDateSubtype ( $results, $attributes,ACTIVE_DATE,ACTIVE_SUBTYPE));
                 }
-                if ($group_date){
-                     return ($this->publicationsByGroup( $results, $attributes,"date"));
+                if (strcmp($cmp, CMP_DATE)==0){
+                     return ($this->publicationsByGroup( $results, $attributes,ACTIVE_DATE));
                 }
-                if ($group_subtype){
-                     return ($this->publicationsByGroup( $results, $attributes,"subtype"));
+                if (strcmp($cmp, CMP_SUBTYPE)==0){
+                     return ($this->publicationsByGroup( $results, $attributes,ACTIVE_SUBTYPE));
                 }
                 return $this->allPublications($results, $attributes);
-	}
+        }
 } // end class
