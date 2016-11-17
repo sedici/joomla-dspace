@@ -23,7 +23,7 @@ class View {
             if (!empty($names)){
             ?>
             <div id="sedici-title">
-            <?php echo('Autores: ');
+            <?php echo JText::_('MOD_DSPACE_VIEW_AUTHOR');
                 print_r(implode("-", $names));
             ?>
             </div>
@@ -47,11 +47,11 @@ class View {
 	
 	public function show_description ($description,$item,$maxlenght){
 		if ($description == "description") { ?>
-                      <div id="sedici-title"><?php echo("Resumen:");  
+                <div id="sedici-title"><?php echo JText::_("MOD_DSPACE_VIEW_DESCRIPTION");  
                         $show_text = $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
                         $show_text = $show_text[0]['data'];
                 } else {  ?>
-                     <div id="sedici-title"><?php echo('Sumario:'); 
+                    <div id="sedici-title"><?php echo JText::_("MOD_DSPACE_VIEW_SUMMARY"); 
                         $show_text = $item->get_description ();
                 } ?>
                 <span class="sedici-content">
@@ -115,14 +115,14 @@ class View {
 				if ($attributes['date']) 
                                 { ?>
                                     <published>
-                                        <div id="sedici-title"><?php echo('Fecha:'); ?> 
+                                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DATE'); ?> 
                                         <span class="sedici-content"><?php  echo $item->get_date ( 'Y-m-d' ); ?></span></div>
                                     </published>
 				<?php } //end if fecha  
                                 if ($attributes['show_subtypes']) 
                                 { ?>
                                     <dc:type>
-                                        <div id="sedici-title"><?php echo('Tipo de documento:'); ?> 
+                                        <div id="sedici-title"><?php echo JText::_('MOD_DSPACE_VIEW_DOCUMENT_SUBTYPE'); ?> 
                                             <span class="sedici-content"><?php  echo $this->dctype($item); ?></span></div>
                                     </dc:type>
 				<?php } //end if fecha
